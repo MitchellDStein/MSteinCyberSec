@@ -141,7 +141,7 @@ You can set your social links in `_data/social.yml`. You can custom titles, URLs
   url: https://twitter.com/vszhub
   icon: fab fa-twitter
 - title: GitHub
-  url: https://github.com/vszhub/not-pure-poole
+  url: https://github.com/MitchellDSteinnot-pure-poole
   icon: fab fa-github
 ```
 

@@ -1,7 +1,7 @@
 # Setup
-title: Not Pure Poole
-description: A simple, beautiful, and powerful Jekyll theme for blogs
-url: https://vszhub.github.io
+title: 
+description: An exploratory dive into Red Team methodologies
+url: https://MitchellDStein.github.io
 avatar: /assets/images/mitchell.jpg
 paginate: 5
 permalink: pretty
@@ -54,5 +54,5 @@ sass:
 # Specify the author for blog posts
 author:
   name: Mitchell Stein
-  url: https://github.com/vszhub/
-  email: vszhub@gmail.com
+  url: https://github.com/MitchellDStein
+  email: mstein999@gmail.com
