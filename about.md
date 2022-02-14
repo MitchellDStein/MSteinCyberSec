@@ -10,7 +10,7 @@ Ever since I was a child I have been taking apart computers, moding my video gam
 
 ### More Information
 
-Feel free to look me up on [TryHackMe](https://tryhackme.com/p/Craz3Squirr3l) and [HackTheBox](https://app.hackthebox.com/users/472180)
+Feel free to look me up on [TryHackMe](https://tryhackme.com/p/Craz3Squirr3l) and [HackTheBox](https://app.hackthebox.com/users/472180). I will be uploading my write-ups here on this site so stay tuned!
 
 ### Contact me
 
