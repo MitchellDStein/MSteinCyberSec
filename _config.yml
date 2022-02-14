@@ -1,11 +1,11 @@
 # Setup
-title: 
+title: Mitchell's Red Team Dive
 description: An exploratory dive into Red Team methodologies
 url: https://MitchellDStein.github.io
-avatar: /assets/images/mitchell.jpg
+avatar: mitchell.jpg
 paginate: 5
 permalink: pretty
-cover_image: /assets/images/lakeland.jpg
+cover_image: lakeland.jpg
 
 # Gems
 plugins:
@@ -27,7 +27,7 @@ exclude:
   - scripts/
   - not-pure-poole.gemspec
 
-social-links:
+social_links:
   email: mstein999@gmail.com
   github: MitchellDStein
   linkedin: mitchell-stein-10011996
