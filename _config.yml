@@ -2,10 +2,10 @@
 title: Not Pure Poole
 description: A simple, beautiful, and powerful Jekyll theme for blogs
 url: https://vszhub.github.io
-avatar: /assets/images/mitchell.jpeg
+avatar: /assets/images/mitchell.jpg
 paginate: 5
 permalink: pretty
-cover_image: /assets/images/lakeland.jpeg
+cover_image: /assets/images/lakeland.jpg
 
 # Gems
 plugins:
@@ -29,14 +29,13 @@ exclude:
 
 # Optimize Jekyl SEO Tag
 twitter:
-  username: vszhub
+  username: Mitchell
   card: summary
 logo: logo.png
 social:
-  name: Songzi Vong
+  name: Mitchell Stein
   links:
-    - https://twitter.com/vszhub
-    - https://github.com/vszhub
+    - https://github.com/
 google_site_verification: xxxxx
 lang: en
 
