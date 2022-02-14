@@ -27,6 +27,13 @@ exclude:
   - scripts/
   - not-pure-poole.gemspec
 
+social-links:
+  email: mstein999@gmail.com
+  github: MitchellDStein
+  linkedin: mitchell-stein-10011996
+  hackthebox: 472180
+  tryhackme: Craz3Squirr3l
+
 # Optimize Jekyl SEO Tag
 twitter:
   username: Mitchell
