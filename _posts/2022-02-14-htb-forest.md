@@ -16,19 +16,80 @@ Forest is an easy Windows box with a focus on Acdive Directory recon rather than
 
 First, similar to every other box, we begin with a humble nmap scan. Because this is a Windows machine, we will need to add `-Pn` to the scan.
 
-<iframe
-  src="https://carbon.now.sh/embed?bg=rgba%28171%2C184%2C195%2C0%29&t=seti&wt=none&l=auto&width=446&ds=true&dsyoff=0px&dsblur=0px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=14px&lh=133%25&si=false&es=2x&wm=false&code=%2523%2520Nmap%25207.92%2520scan%2520initiated%2520as%253A%2520nmap%2520-sC%2520-sV%2520-p-%2520-o%2520allnmap%2520-v%2520-Pn%2520--min-rate%25201000%252010.10.10.161%250ANmap%2520scan%2520report%2520for%252010.10.10.161%250AHost%2520is%2520up%2520%280.051s%2520latency%29.%250ANot%2520shown%253A%252065514%2520closed%2520tcp%2520ports%2520%28conn-refused%29%250APORT%2520%2520%2520%2520%2520%2520STATE%2520SERVICE%2520%2520%2520%2520%2520%2520VERSION%250A88%252Ftcp%2520%2520%2520%2520open%2520%2520kerberos-sec%2520Microsoft%2520Windows%2520Kerberos%2520%28server%2520time%253A%25202022-02-08%252004%253A47%253A23Z%29%250A135%252Ftcp%2520%2520%2520open%2520%2520msrpc%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520RPC%250A139%252Ftcp%2520%2520%2520open%2520%2520netbios-ssn%2520%2520Microsoft%2520Windows%2520netbios-ssn%250A389%252Ftcp%2520%2520%2520open%2520%2520ldap%2520%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520Active%2520Directory%2520LDAP%2520%28Domain%253A%2520htb.local%252C%2520Site%253A%2520Default-First-Site-Name%29%250A464%252Ftcp%2520%2520%2520open%2520%2520kpasswd5%253F%250A593%252Ftcp%2520%2520%2520open%2520%2520ncacn_http%2520%2520%2520Microsoft%2520Windows%2520RPC%2520over%2520HTTP%25201.0%250A636%252Ftcp%2520%2520%2520open%2520%2520tcpwrapped%250A3268%252Ftcp%2520%2520open%2520%2520ldap%2520%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520Active%2520Directory%2520LDAP%2520%28Domain%253A%2520htb.local%252C%2520Site%253A%2520Default-First-Site-Name%29%250A3269%252Ftcp%2520%2520open%2520%2520tcpwrapped%250A5985%252Ftcp%2520%2520open%2520%2520http%2520%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520HTTPAPI%2520httpd%25202.0%2520%28SSDP%252FUPnP%29%250A%257C_http-title%253A%2520Not%2520Found%250A%257C_http-server-header%253A%2520Microsoft-HTTPAPI%252F2.0%250A9389%252Ftcp%2520%2520open%2520%2520mc-nmf%2520%2520%2520%2520%2520%2520%2520.NET%2520Message%2520Framing%250A47001%252Ftcp%2520open%2520%2520http%2520%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520HTTPAPI%2520httpd%25202.0%2520%28SSDP%252FUPnP%29%250A%257C_http-title%253A%2520Not%2520Found%250A%257C_http-server-header%253A%2520Microsoft-HTTPAPI%252F2.0%250A49664%252Ftcp%2520open%2520%2520msrpc%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520RPC%250A49665%252Ftcp%2520open%2520%2520msrpc%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520RPC%250A49666%252Ftcp%2520open%2520%2520msrpc%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520RPC%250A49667%252Ftcp%2520open%2520%2520msrpc%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520RPC%250A49671%252Ftcp%2520open%2520%2520msrpc%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520RPC%250A49676%252Ftcp%2520open%2520%2520ncacn_http%2520%2520%2520Microsoft%2520Windows%2520RPC%2520over%2520HTTP%25201.0%250A49677%252Ftcp%2520open%2520%2520msrpc%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520RPC%250A49684%252Ftcp%2520open%2520%2520msrpc%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520RPC%250A49703%252Ftcp%2520open%2520%2520msrpc%2520%2520%2520%2520%2520%2520%2520%2520Microsoft%2520Windows%2520RPC%250AService%2520Info%253A%2520Host%253A%2520FOREST%253B%2520OS%253A%2520Windows%253B%2520CPE%253A%2520cpe%253A%252Fo%253Amicrosoft%253Awindows%250A%250AHost%2520script%2520results%253A%250A%257C_smb2-time%253A%2520ERROR%253A%2520Script%2520execution%2520failed%2520%28use%2520-d%2520to%2520debug%29%250A%257C_smb2-security-mode%253A%2520SMB%253A%2520Couldn%27t%2520find%2520a%2520NetBIOS%2520name%2520that%2520works%2520for%2520the%2520server.%2520Sorry%21"
-  style="width: 1024px; height: 861px; border:0; transform: scale(1); overflow:hidden;"
-  sandbox="allow-scripts allow-same-origin">
-</iframe>
+```shell
+# Nmap 7.92 scan initiated as: nmap -sC -sV -p- -o allnmap -v -Pn --min-rate 1000 10.10.10.161
+Nmap scan report for 10.10.10.161
+Host is up (0.051s latency).
+Not shown: 65514 closed tcp ports (conn-refused)
+PORT      STATE SERVICE      VERSION
+88/tcp    open  kerberos-sec Microsoft Windows Kerberos (server time: 2022-02-08 04:47:23Z)
+135/tcp   open  msrpc        Microsoft Windows RPC
+139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn
+389/tcp   open  ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)
+464/tcp   open  kpasswd5?
+593/tcp   open  ncacn_http   Microsoft Windows RPC over HTTP 1.0
+636/tcp   open  tcpwrapped
+3268/tcp  open  ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)
+3269/tcp  open  tcpwrapped
+5985/tcp  open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+9389/tcp  open  mc-nmf       .NET Message Framing
+47001/tcp open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-title: Not Found
+|_http-server-header: Microsoft-HTTPAPI/2.0
+49664/tcp open  msrpc        Microsoft Windows RPC
+49665/tcp open  msrpc        Microsoft Windows RPC
+49666/tcp open  msrpc        Microsoft Windows RPC
+49667/tcp open  msrpc        Microsoft Windows RPC
+49671/tcp open  msrpc        Microsoft Windows RPC
+49676/tcp open  ncacn_http   Microsoft Windows RPC over HTTP 1.0
+49677/tcp open  msrpc        Microsoft Windows RPC
+49684/tcp open  msrpc        Microsoft Windows RPC
+49703/tcp open  msrpc        Microsoft Windows RPC
+Service Info: Host: FOREST; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_smb2-time: ERROR: Script execution failed (use -d to debug)
+|_smb2-security-mode: SMB: Couldn't find a NetBIOS name that works for the server. Sorry!
+```
 
 Given we have LDAP port 389 we can use Enum4Linux to enumerate this LDAP service for users.
 
-<iframe
-  src="https://carbon.now.sh/embed?bg=rgba%28171%2C184%2C195%2C0%29&t=seti&wt=none&l=text&width=446&ds=true&dsyoff=0px&dsblur=0px&wc=true&wa=true&pv=4px&ph=5px&ln=false&fl=1&fm=Hack&fs=14px&lh=133%25&si=false&es=2x&wm=false&code=%2524%2520enum4linux%2520-a%252010.10.10.161%25202%253E%2520%252Fdev%252Fnull%250Auser%253A%255BAdministrator%255D%2520rid%253A%255B0x1f4%255D%250Auser%253A%255BGuest%255D%2520rid%253A%255B0x1f5%255D%250Auser%253A%255Bkrbtgt%255D%2520rid%253A%255B0x1f6%255D%250Auser%253A%255BDefaultAccount%255D%2520rid%253A%255B0x1f7%255D%250Auser%253A%255B%2524331000-VK4ADACQNUCA%255D%2520rid%253A%255B0x463%255D%250Auser%253A%255BSM_2c8eef0a09b545acb%255D%2520rid%253A%255B0x464%255D%250Auser%253A%255BSM_ca8c2ed5bdab4dc9b%255D%2520rid%253A%255B0x465%255D%250Auser%253A%255BSM_75a538d3025e4db9a%255D%2520rid%253A%255B0x466%255D%250Auser%253A%255BSM_681f53d4942840e18%255D%2520rid%253A%255B0x467%255D%250Auser%253A%255BSM_1b41c9286325456bb%255D%2520rid%253A%255B0x468%255D%250Auser%253A%255BSM_9b69f1b9d2cc45549%255D%2520rid%253A%255B0x469%255D%250Auser%253A%255BSM_7c96b981967141ebb%255D%2520rid%253A%255B0x46a%255D%250Auser%253A%255BSM_c75ee099d0a64c91b%255D%2520rid%253A%255B0x46b%255D%250Auser%253A%255BSM_1ffab36a2f5f479cb%255D%2520rid%253A%255B0x46c%255D%250Auser%253A%255BHealthMailboxc3d7722%255D%2520rid%253A%255B0x46e%255D%250Auser%253A%255BHealthMailboxfc9daad%255D%2520rid%253A%255B0x46f%255D%250Auser%253A%255BHealthMailboxc0a90c9%255D%2520rid%253A%255B0x470%255D%250Auser%253A%255BHealthMailbox670628e%255D%2520rid%253A%255B0x471%255D%250Auser%253A%255BHealthMailbox968e74d%255D%2520rid%253A%255B0x472%255D%250Auser%253A%255BHealthMailbox6ded678%255D%2520rid%253A%255B0x473%255D%250Auser%253A%255BHealthMailbox83d6781%255D%2520rid%253A%255B0x474%255D%250Auser%253A%255BHealthMailboxfd87238%255D%2520rid%253A%255B0x475%255D%250Auser%253A%255BHealthMailboxb01ac64%255D%2520rid%253A%255B0x476%255D%250Auser%253A%255BHealthMailbox7108a4e%255D%2520rid%253A%255B0x477%255D%250Auser%253A%255BHealthMailbox0659cc1%255D%2520rid%253A%255B0x478%255D%250Auser%253A%255Bsebastien%255D%2520rid%253A%255B0x479%255D%250Auser%253A%255Blucinda%255D%2520rid%253A%255B0x47a%255D%250Auser%253A%255Bsvc-alfresco%255D%2520rid%253A%255B0x47b%255D%250Auser%253A%255Bandy%255D%2520rid%253A%255B0x47e%255D%250Auser%253A%255Bmark%255D%2520rid%253A%255B0x47f%255D%250Auser%253A%255Bsanti%255D%2520rid%253A%255B0x480%255D"
-  style="width: 426px; height: 746px; border:0; transform: scale(1); overflow:hidden;"
-  sandbox="allow-scripts allow-same-origin">
-</iframe>
+```shell
+$ enum4linux -a 10.10.10.161 2> /dev/null
+user:[Administrator] rid:[0x1f4]
+user:[Guest] rid:[0x1f5]
+user:[krbtgt] rid:[0x1f6]
+user:[DefaultAccount] rid:[0x1f7]
+user:[$331000-VK4ADACQNUCA] rid:[0x463]
+user:[SM_2c8eef0a09b545acb] rid:[0x464]
+user:[SM_ca8c2ed5bdab4dc9b] rid:[0x465]
+user:[SM_75a538d3025e4db9a] rid:[0x466]
+user:[SM_681f53d4942840e18] rid:[0x467]
+user:[SM_1b41c9286325456bb] rid:[0x468]
+user:[SM_9b69f1b9d2cc45549] rid:[0x469]
+user:[SM_7c96b981967141ebb] rid:[0x46a]
+user:[SM_c75ee099d0a64c91b] rid:[0x46b]
+user:[SM_1ffab36a2f5f479cb] rid:[0x46c]
+user:[HealthMailboxc3d7722] rid:[0x46e]
+user:[HealthMailboxfc9daad] rid:[0x46f]
+user:[HealthMailboxc0a90c9] rid:[0x470]
+user:[HealthMailbox670628e] rid:[0x471]
+user:[HealthMailbox968e74d] rid:[0x472]
+user:[HealthMailbox6ded678] rid:[0x473]
+user:[HealthMailbox83d6781] rid:[0x474]
+user:[HealthMailboxfd87238] rid:[0x475]
+user:[HealthMailboxb01ac64] rid:[0x476]
+user:[HealthMailbox7108a4e] rid:[0x477]
+user:[HealthMailbox0659cc1] rid:[0x478]
+user:[sebastien] rid:[0x479]
+user:[lucinda] rid:[0x47a]
+user:[svc-alfresco] rid:[0x47b]
+user:[andy] rid:[0x47e]
+user:[mark] rid:[0x47f]
+user:[santi] rid:[0x480]
+```
 
 Fantastic! We have a list of users we can use against other tools to see if we can get any user hashes.
 
