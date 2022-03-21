@@ -6,7 +6,7 @@ permalink: /about/
 
 Pleasure to meet you! My name is Mitchell Stein and I am a Programmer Analyst with a large interest in Cyber Security.
 
-Ever since I was a child I have been taking apart computers, moding my video games, and facinated with the general concept of computers. This facination has lead me to persue higher education at Florida Polytechnic University where I learned how to create my own programs (some to exploit a specific popular Sci-Fi FPS game).
+Ever since I was a child I have been taking apart computers, modding my video games, and fascinated with the general concept of computers. This fascination has lead me to pursue higher education at Florida Polytechnic University where I learned how to create my own programs (some to exploit a specific popular Sci-Fi FPS game).
 
 ### More Information
 

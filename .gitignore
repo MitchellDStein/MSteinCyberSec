@@ -44,3 +44,8 @@ node_modules
 
 # Ruby gems
 *.gem
+
+# VS Code Files
+.vscode
+
+2020-09-29-welcome-to-not-pure-poole.md
