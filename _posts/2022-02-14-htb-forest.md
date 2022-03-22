@@ -179,8 +179,35 @@ $ evil-winrm -i 10.10.10.161 -u svc-alfresco -p 's3rvice'
 ```
 
 ## Bloodhound
+
 I used Bloodhound to enumerate this machine and find relationships between the users and groups. To do this you must first upload SharpHound.exe to the remote machine through Evil-WinRM and collect all the information you can.
 
 ![SharpHound](https://mitchelldstein.github.io/assets/images/Forest/SharpHound.png)
 
 To get the created json files off the machine, you can use Impacket-SmbServer and connect to it through Evil-WinRM.
+
+Opening Bloodhound and importing the graphs provides the following graph
+
+![BloodHound](https://mitchelldstein.github.io/assets/images/Forest/BloodHound.png)
+
+WriteDacl can be exploited to give access to DCSync, Which can allow the owned user to be exploited by Impacket-SecretsDump to dump the user hashes.
+
+## Exploitation
+
+1. Create a new user and add them to the "Exchange Windows Permissions" group
+   ![New User](https://mitchelldstein.github.io/assets/images/Forest/NewUser.png)
+2. Upload Powerview.ps1, which can be found [here](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)
+
+   ```shell
+   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> upload <path-to-file>/PowerView.ps1
+   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> Import-Module PowerView.ps1
+   ```
+
+3. Perform the DCsync exploit with PowerView.ps1 (Both $SecPassword and user password must be the same)
+
+   ```shell
+   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> $SecPassword = ConvertTo-String '
+   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> 
+   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> 
+
+   ```
