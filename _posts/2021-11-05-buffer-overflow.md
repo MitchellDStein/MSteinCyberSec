@@ -27,7 +27,7 @@ Fuzzing is the process of finding errors and security flaws in software or netwo
 
 Here is a fuzzer made in python that will interact with the running application and log the length of the command sent.
 
-***fuzzer.py:***
+**_fuzzer.py:_**
 
 ```python
 #!/usr/bin/env python3
@@ -57,3 +57,7 @@ while True:
     string += 100 * "A"
     time.sleep(1)
 ```
+
+Run this command against the network facing program and log the number of bytes it crashed at. As a good rule of thumb always add +400 to the crashed bytes.
+
+## Crash Replication & EIP Control
