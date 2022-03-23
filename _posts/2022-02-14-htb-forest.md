@@ -180,15 +180,14 @@ $ evil-winrm -i 10.10.10.161 -u svc-alfresco -p 's3rvice'
 ```
 
 ## Bloodhound
-<<<<<<< HEAD
 
-I used Bloodhound to enumerate this machine and find relationships between the users and groups. To do this you must first upload SharpHound.exe to the remote machine through Evil-WinRM and collect all the information you can.
+I used `Bloodhound` to enumerate this machine and find relationships between the users and groups. To do this you must first upload SharpHound.exe to the remote machine through Evil-WinRM and collect all the information you can.
 
 ![SharpHound](https://mitchelldstein.github.io/assets/images/Forest/SharpHound.png)
 
 To get the created json files off the machine, you can use Impacket-SmbServer and connect to it through Evil-WinRM.
 
-Opening Bloodhound and importing the graphs provides the following graph
+Opening `Bloodhound` and importing the graphs provides the following graph
 
 ![BloodHound](https://mitchelldstein.github.io/assets/images/Forest/BloodHound.png)
 
@@ -211,12 +210,4 @@ WriteDacl can be exploited to give access to DCSync, Which can allow the owned u
    *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> $SecPassword = ConvertTo-String '
    *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> 
    *Evil-WinRM* PS C:\Users\svc-alfresco\Documents> 
-
    ```
-=======
-I used `Bloodhound` to enumerate this machine and find relationships between the users and groups. To do this you must first upload SharpHound.exe to the remote machine through `Evil-WinRM` and collect all the information you can.
-
-![SharpHound](https://mitchelldstein.github.io/assets/images/Forest/SharpHound.png)
-
-To get the created json files off the machine, you can use Impacket-SmbServer and connect to it through `Evil-WinRM`.
->>>>>>> 9d5351d4256f5e3e2f757c41de1e01e8bc95d3eb
