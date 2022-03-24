@@ -5,7 +5,7 @@ author: Mitchell Stein
 tags:
 - jekyll theme
 - jekyll
-date: 2021-11-02
+date: 2021-11-27
 tags: [TryHackMe, WebApp, Linux]
 categories: [Practice]
 toc:  true
@@ -151,7 +151,7 @@ Now that we can log into the WordPress site, to get a reverse shell on the syste
 
 I personally like to upload my reverse shells into this file just under the header comment section. A great php-reverse-shell to use is [pentestmonkey's](https://pentestmonkey.net/tools/web-shells/php-reverse-shell).
 
-After adding the reverse shell navigate to http://10.10.167.86/header.php
+After adding the reverse shell navigate to 10.10.167.86/header.php
 
 ```zsh
 ┌──(root💀kali-linux-2021-1)-[/home/parallels/THM/Mr.Robot]
@@ -186,7 +186,7 @@ robot
 
 daemon@linux:/home$ cd robot/
 daemon@linux:/home/robot$ ls
-key-2-of-3.txt	password.raw-md5
+key-2-of-3.txt  password.raw-md5
 
 daemon@linux:/home/robot$ cat password.raw-md5
 robot:c3fcd3d76192e4007dfb496cca67e13b
