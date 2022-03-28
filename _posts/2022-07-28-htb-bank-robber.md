@@ -1,16 +1,14 @@
 ---
- layout: post
-
+layout: post
 title: Bank Robber
 author: Mitchell Stein
 tags:
-
 - jekyll theme
 - jekyll
-  date: 2021-11-27
-  tags: [write up, hackthebox, Windows]
-  categories: [Practice]
-  toc: true
+date: 2021-11-27
+tags: [write up, hackthebox, Windows]
+categories: [Practice]
+toc: true
 ---
 
 Bank Robber is a machine hosted by HackTheBox that requires more XSS, cookies, and SQL knowledge.

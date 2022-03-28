@@ -3,10 +3,8 @@ layout: post
 title: Common Tools and Commands
 author: Mitchell Stein
 tags:
-
-jekyll theme
-
-jekyll
+- jekyll theme
+- jekyll
 date: 2022-03-27
 tags: []
 categories: [Toolkit]
