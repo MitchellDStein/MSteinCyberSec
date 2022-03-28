@@ -20,7 +20,8 @@ Bank Robber is a machine hosted by HackTheBox that requires more XSS, cookies, a
 ### Nmap
 
 ```zsh
-$ nmap -sC -sV -o nmap 10.10.10.154
+┌──(root💀kali-linux-2021-1)-[/home/parallels]
+└─# nmap -sC -sV -o nmap 10.10.10.154
 # Nmap 7.91 scan initiated Mon Jul 26 11:18:06 2021 as: nmap -sC -sV -o nmap 10.10.10.154
 Nmap scan report for 10.10.10.154
 Host is up (0.087s latency).
@@ -236,13 +237,14 @@ Please enter your super secret 4 digit PIN code to login:
 [$] 0021
 [$] PIN is correct, access granted!
 ```
+
 Using the example in my [Buffer Overflow Overview](https://mitchelldstein.github.io/tools/2021/11/02/buffer-overflow/), we can craft an exploit to get a shell through this program.
 
-```
+```zsh
 /usr/bin/msf-pattern_create -l 100
 
 ┌──(root💀kali-linux-2021-1)-[/home/parallels]
-└─#nc localhost 910
+└─# nc localhost 910
     --------------------------------------------------------------
     Internet E-Coin Transfer System
     International Bank of Sun church
